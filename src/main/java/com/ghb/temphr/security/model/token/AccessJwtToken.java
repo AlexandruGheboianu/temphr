@@ -8,6 +8,9 @@ import io.jsonwebtoken.Claims;
  * Raw representation of JWT Token.
  */
 public final class AccessJwtToken implements JwtToken {
+
+  private static final long serialVersionUID = 1322120000551622359L;
+
   private final String rawToken;
   @JsonIgnore
   private transient Claims claims;

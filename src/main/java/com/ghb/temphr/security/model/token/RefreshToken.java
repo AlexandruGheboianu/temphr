@@ -15,7 +15,7 @@ import java.util.Optional;
 @SuppressWarnings("unchecked")
 public class RefreshToken implements JwtToken {
   private transient Jws<Claims> claims;
-
+  private static final long serialVersionUID = 1322120000551624352L;
   private RefreshToken(Jws<Claims> claims) {
     this.claims = claims;
   }
