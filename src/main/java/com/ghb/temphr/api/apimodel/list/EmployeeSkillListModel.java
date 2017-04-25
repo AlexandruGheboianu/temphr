@@ -9,5 +9,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EmployeeSkillListModel extends SkillListModel {
-    private int level;
+  private int level;
 }

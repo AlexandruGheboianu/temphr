@@ -14,9 +14,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SkillListModel {
 
-    private String id;
+  private String id;
 
-    private String name;
+  private String name;
 
-    private String type;
+  private String type;
 }

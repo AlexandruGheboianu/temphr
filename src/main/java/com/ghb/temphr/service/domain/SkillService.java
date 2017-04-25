@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SkillService {
 
-    @Autowired
-    private SkillRepository skillRepository;
+  @Autowired
+  private SkillRepository skillRepository;
 
 
 }

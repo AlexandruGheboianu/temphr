@@ -6,22 +6,23 @@ import io.jsonwebtoken.Claims;
 
 /**
  * Raw representation of JWT Token.
- * 
  */
 public final class AccessJwtToken implements JwtToken {
-    private final String rawToken;
-    @JsonIgnore private Claims claims;
+  private final String rawToken;
+  @JsonIgnore
+  private transient Claims claims;
 
-    protected AccessJwtToken(final String token, Claims claims) {
-        this.rawToken = token;
-        this.claims = claims;
-    }
+  protected AccessJwtToken(final String token, Claims claims) {
+    this.rawToken = token;
+    this.claims = claims;
+  }
 
-    public String getToken() {
-        return this.rawToken;
-    }
+  @Override
+  public String getToken() {
+    return this.rawToken;
+  }
 
-    public Claims getClaims() {
-        return claims;
-    }
+  public Claims getClaims() {
+    return claims;
+  }
 }

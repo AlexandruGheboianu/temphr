@@ -16,23 +16,24 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="APP_USER")
+@Table(name = "APP_USER")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    @Id @Column(name="ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(name="username")
-    private String username;
-    
-    @Column(name="password")
-    private String password;
-    
-    @OneToMany
-    @JoinColumn(name="APP_USER_ID", referencedColumnName="ID")
-    private List<UserRole> roles;
-    
+  @Id
+  @Column(name = "ID")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  @Column(name = "username")
+  private String username;
+
+  @Column(name = "password")
+  private String password;
+
+  @OneToMany
+  @JoinColumn(name = "APP_USER_ID", referencedColumnName = "ID")
+  private List<UserRole> roles;
+
 }

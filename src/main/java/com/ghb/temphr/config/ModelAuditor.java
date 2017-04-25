@@ -9,13 +9,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class ModelAuditor implements AuditorAware<String> {
 
-    @Override
-    public String getCurrentAuditor() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            return auth.getName(); //get logged in username
-        } else {
-            return "Anonymous";
-        }
+  @Override
+  public String getCurrentAuditor() {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth != null) {
+      return auth.getName(); //get logged in username
+    } else {
+      return "Anonymous";
     }
+  }
 }

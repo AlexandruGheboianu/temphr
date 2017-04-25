@@ -15,9 +15,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ProjectListModel {
 
-    private String id;
+  private String id;
 
-    private String name;
+  private String name;
 
-    private String startDate;
+  private String startDate;
 }

@@ -1,5 +1,8 @@
 package com.ghb.temphr.security.model.token;
 
-public interface JwtToken {
-    String getToken();
+import java.io.Serializable;
+
+@FunctionalInterface
+public interface JwtToken extends Serializable{
+  String getToken();
 }

@@ -10,41 +10,48 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * Created by agheboianu on 03.03.2017.
  */
 @Service
 public class EmployeeService {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+  private static final Hashids hashids = new Hashids("k7ds8kxomx");
+  @Autowired
+  private EmployeeRepository employeeRepository;
 
-    private static final Hashids hashids = new Hashids("k7ds8kxomx");
+  public void addEmployee(EmployeeAdd employeeAdd) {
+    Employee employee = new Employee();
+    employee.setFirstName(employeeAdd.getFirstName());
+    employee.setLastName(employeeAdd.getLastName());
+    employee.setEmail(employeeAdd.getEmail());
+    employeeRepository.save(employee);
+  }
 
-    public void addEmployee(EmployeeAdd employeeAdd) {
-        Employee employee = new Employee();
-        employee.setFirstName(employeeAdd.getFirstName());
-        employee.setLastName(employeeAdd.getLastName());
-        employee.setEmail(employeeAdd.getEmail());
-        employeeRepository.save(employee);
+  public Page<EmployeeListModel> listEmployees(Pageable pageable) {
+    return employeeRepository.findAll(pageable).map(this::getEmployeeListModel);
+  }
+
+  public Optional<EmployeeListModel> getEmployee(String id) {
+    Employee employee = employeeRepository.findOne(hashids.decode(id)[0]);
+
+    if (employee == null) {
+      return Optional.empty();
     }
 
-    public Page<EmployeeListModel> listEmployees(Pageable pageable) {
-        return employeeRepository.findAll(pageable).map(this::getEmployeeListModel);
-    }
+    return Optional.of(getEmployeeListModel(employee));
+  }
 
-    public EmployeeListModel getEmployee(String id) {
-        return getEmployeeListModel(employeeRepository.findOne(hashids.decode(id)[0]));
-    }
-
-    private EmployeeListModel getEmployeeListModel(Employee employee) {
-        EmployeeListModel employeeListModel = new EmployeeListModel();
-        employeeListModel.setId(hashids.encode(employee.getId()));
-        employeeListModel.setFirstName(employee.getFirstName());
-        employeeListModel.setLastName(employee.getLastName());
-        employeeListModel.setEmail(employee.getEmail());
-        return employeeListModel;
-    }
+  private EmployeeListModel getEmployeeListModel(Employee employee) {
+    EmployeeListModel employeeListModel = new EmployeeListModel();
+    employeeListModel.setId(hashids.encode(employee.getId()));
+    employeeListModel.setFirstName(employee.getFirstName());
+    employeeListModel.setLastName(employee.getLastName());
+    employeeListModel.setEmail(employee.getEmail());
+    return employeeListModel;
+  }
 
 
 }

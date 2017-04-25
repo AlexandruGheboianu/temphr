@@ -9,5 +9,5 @@ import java.util.List;
  * Created by agheboianu on 07.03.2017.
  */
 public interface EmployeeSkillRepository extends JpaRepository<EmployeeSkill, Long> {
-    List<EmployeeSkill> findByEmployee_id(long id);
+  List<EmployeeSkill> findByEmployee_id(long id);
 }

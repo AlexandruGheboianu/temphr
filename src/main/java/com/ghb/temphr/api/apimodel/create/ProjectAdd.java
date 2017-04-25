@@ -18,10 +18,10 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectAdd {
-    @NotNull
-    @JsonProperty
-    @Size(max = 100, min = 1)
-    private String name;
+  @NotNull
+  @JsonProperty
+  @Size(max = 100, min = 1)
+  private String name;
 
-    private String startDate;
+  private String startDate;
 }

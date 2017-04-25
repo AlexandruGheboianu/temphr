@@ -20,13 +20,13 @@ import javax.persistence.Table;
 @Table(name = "EMPLOYEE_SKILLS")
 public class EmployeeSkill extends BaseEntity {
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+  @ManyToOne
+  @JoinColumn(name = "employee_id")
+  private Employee employee;
 
-    @ManyToOne
-    @JoinColumn(name = "skill_id")
-    private Skill skill;
+  @ManyToOne
+  @JoinColumn(name = "skill_id")
+  private Skill skill;
 
-    private int level;
+  private int level;
 }
