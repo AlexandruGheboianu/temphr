@@ -4,6 +4,8 @@ import com.ghb.temphr.config.AuditingDateTimeProvider;
 import com.ghb.temphr.config.ModelAuditor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.auditing.DateTimeProvider;
 import org.springframework.data.domain.AuditorAware;
@@ -17,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @SpringBootApplication
 @EnableJpaAuditing(dateTimeProviderRef = "", auditorAwareRef = "")
-public class Application {
+public class Application extends SpringBootServletInitializer {
 
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
@@ -41,5 +43,10 @@ public class Application {
   @Bean
   AuditorAware<String> auditorAware() {
     return new ModelAuditor();
+  }
+
+  @Override
+  protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+    return application.sources(Application.class);
   }
 }
