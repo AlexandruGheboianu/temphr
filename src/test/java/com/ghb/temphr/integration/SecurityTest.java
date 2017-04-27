@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -31,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class SecurityTest {
   private static final MediaType json = MediaType.APPLICATION_JSON_UTF8;
   @Autowired
@@ -66,7 +69,7 @@ public class SecurityTest {
 
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void noPermissionsTest() throws Exception {
     MediaType json = MediaType.APPLICATION_JSON;
     HttpHeaders headers = new HttpHeaders();
@@ -88,6 +91,13 @@ public class SecurityTest {
         .andExpect(status().isUnauthorized());
   }
 
+  @Test
+  public void expiredToken() throws Exception {
+    this.mvc
+        .perform(get("/api/employees").header("X-Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbGV4Z2hlYm8iLCJzY29wZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfUFJFTUlVTV9NRU1CRVIiXSwiaXNzIjoiaHR0cDovL2doYi1zb2Z0d2FyZS5jb20iLCJpYXQiOjE0OTMyOTM0NzMsImV4cCI6MTQ5MzI5NDM3M30.XWPxssFYGhoWDJfOC4AJuD-R2T5OrInUANFEck8cM_rm44sbr3eYFTP5R1YKC3oVxcEQ2KzVrkcNjeJok3TW9g"))
+        .andExpect(status().isUnauthorized());
+
+  }
   @Test
   public void malformedToken() throws Exception {
     this.mvc

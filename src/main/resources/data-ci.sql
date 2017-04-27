@@ -35,8 +35,10 @@ INSERT INTO PROJECTS (name, start_date, version, deleted) VALUES
 
 INSERT INTO APP_USER (password, username) VALUES
 ('$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G','alexghebo'),
-('$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G','gigi');
+('$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G','gigi'),
+('$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G','gogu');
 
 INSERT INTO USER_ROLE (role, app_user_id) VALUES
 ('ADMIN',1),
+('MEMBER',3),
 ('PREMIUM_MEMBER',1);

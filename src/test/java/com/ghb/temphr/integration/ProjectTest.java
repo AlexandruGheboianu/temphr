@@ -12,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
@@ -28,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ProjectTest extends AuthenticatedTest {
   private static final Hashids hashids = new Hashids("e7rq4kjiof");
   private static final MediaType json = MediaType.APPLICATION_JSON_UTF8;
@@ -78,11 +81,24 @@ public class ProjectTest extends AuthenticatedTest {
 
     Project proj = projectRepository.findOneByName("Plastor");
     assertNotNull(proj);
-    projectRepository.delete(proj);
   }
 
   @Test
   public void projectDeleteForbidden() throws Exception {
+    MediaType json = MediaType.APPLICATION_JSON;
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Content-Type", "application/json");
+    headers.add("X-Requested-With", "XMLHttpRequest");
+    this.mvc
+        .perform(post("/api/auth/login").headers(headers).content("{\"username\":\"gogu\",\"password\":\"test1234\"}"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(json))
+        .andExpect(
+            mvcResult -> {
+              String contentAsString = mvcResult.getResponse().getContentAsString();
+              ObjectMapper mapper = new ObjectMapper();
+              token = mapper.readTree(contentAsString).get("token").asText();
+            });
     this.mvc
         .perform(delete("/api/projects/" + hashids.encode(1)).header("X-Authorization", "Bearer " + token))
         .andExpect(status().isForbidden());
