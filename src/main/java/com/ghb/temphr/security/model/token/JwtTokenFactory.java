@@ -33,10 +33,6 @@ public class JwtTokenFactory {
    * @return AccessJwtToken
    */
   public AccessJwtToken createAccessJwtToken(UserContext userContext) {
-    if (StringUtils.isBlank(userContext.getUsername())) {
-      throw new IllegalArgumentException("Cannot create JWT Token without username");
-    }
-
     if (userContext.getAuthorities() == null || userContext.getAuthorities().isEmpty()) {
       throw new IllegalArgumentException("User doesn't have any privileges");
     }

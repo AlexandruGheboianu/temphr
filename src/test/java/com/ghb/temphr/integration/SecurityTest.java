@@ -73,9 +73,8 @@ public class SecurityTest {
     headers.add("Content-Type", "application/json");
     headers.add("X-Requested-With", "XMLHttpRequest");
     this.mvc
-        .perform(post("/api/auth/login").headers(headers).content("{\"username\":\"gigi\",\"password\":\"test1234\"}"));
-
-
+        .perform(post("/api/auth/login").headers(headers).content("{\"username\":\"gigi\",\"password\":\"test1234\"}"))
+    .andExpect(status().isUnauthorized());
   }
 
   @Test
