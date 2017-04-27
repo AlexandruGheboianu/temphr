@@ -36,7 +36,7 @@ public class EmployeeService {
 
   public Optional<EmployeeListModel> getEmployee(String id) {
     long[] decodedIds = hashids.decode(id);
-    if(decodedIds==null || decodedIds.length==0){
+    if (decodedIds == null || decodedIds.length == 0) {
       return Optional.empty();
     }
 
