@@ -68,7 +68,7 @@ public class ProjectTest extends AuthenticatedTest {
               assertEquals("03/10/2017", actualObj.get("startDate").asText());
             });
     this.mvc
-        .perform(get("/api/projects/" + hashids.encode(123)).header("X-Authorization", "Bearer " + token))
+        .perform(get("/api/projects/" + 123).header("X-Authorization", "Bearer " + token))
         .andExpect(status().isNotFound());
   }
 

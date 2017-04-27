@@ -35,7 +35,12 @@ public class EmployeeService {
   }
 
   public Optional<EmployeeListModel> getEmployee(String id) {
-    Employee employee = employeeRepository.findOne(hashids.decode(id)[0]);
+    long[] decodedIds = hashids.decode(id);
+    if(decodedIds==null || decodedIds.length==0){
+      return Optional.empty();
+    }
+
+    Employee employee = employeeRepository.findOne(decodedIds[0]);
 
     if (employee == null) {
       return Optional.empty();

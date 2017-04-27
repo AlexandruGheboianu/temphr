@@ -56,7 +56,13 @@ public class ProjectService {
   }
 
   public Optional<ProjectListModel> getProject(String id) {
-    Project project = projectRepository.findOne(hashids.decode(id)[0]);
+    long[] decodedIds = hashids.decode(id);
+
+    if (decodedIds == null || decodedIds.length == 0) {
+      return Optional.empty();
+    }
+
+    Project project = projectRepository.findOne(decodedIds[0]);
     if (project == null) {
       return Optional.empty();
     }
@@ -72,8 +78,12 @@ public class ProjectService {
   }
 
   public void removeProject(String id) {
-    Project project = projectRepository.findOne(hashids.decode(id)[0]);
-    project.setDeleted(true);
-    projectRepository.save(project);
+    long[] decodedIds = hashids.decode(id);
+
+    if (decodedIds != null && decodedIds.length > 0) {
+      Project project = projectRepository.findOne(hashids.decode(id)[0]);
+      project.setDeleted(true);
+      projectRepository.save(project);
+    }
   }
 }

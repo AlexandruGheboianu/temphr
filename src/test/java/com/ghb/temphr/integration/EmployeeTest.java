@@ -71,7 +71,7 @@ public class EmployeeTest extends AuthenticatedTest {
             });
 
     this.mvc
-        .perform(get("/api/employees/" + hashids.encode(123)).header("X-Authorization", "Bearer " + token))
+        .perform(get("/api/employees/" + 123).header("X-Authorization", "Bearer " + token))
         .andExpect(status().isNotFound());
   }
 

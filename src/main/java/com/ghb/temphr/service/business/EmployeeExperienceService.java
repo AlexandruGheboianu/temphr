@@ -25,10 +25,16 @@ public class EmployeeExperienceService {
   private EmployeeRepository employeeRepository;
 
   public Optional<List<EmployeeSkillListModel>> getEmployeeSkills(String id) {
-    if (!employeeRepository.exists(hashids.decode(id)[0])) {
+    long[] decodedIds = hashids.decode(id);
+
+    if (decodedIds == null || decodedIds.length == 0) {
       return Optional.empty();
     }
-    return Optional.of(employeeSkillRepository.findByEmployee_id(hashids.decode(id)[0])
+
+    if (!employeeRepository.exists(decodedIds[0])) {
+      return Optional.empty();
+    }
+    return Optional.of(employeeSkillRepository.findByEmployee_id(decodedIds[0])
         .stream()
         .map(this::getEmployeeSkillListModel)
         .collect(Collectors.toList()));
