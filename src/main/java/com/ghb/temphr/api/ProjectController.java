@@ -56,7 +56,7 @@ public class ProjectController {
 
 
   @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-  @PreAuthorize("hasAnyRole('ROLE_SUPER_USER')")
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   public ResponseEntity deleteProject(@PathVariable String id) {
     projectService.removeProject(id);
     return new ResponseEntity(HttpStatus.ACCEPTED);

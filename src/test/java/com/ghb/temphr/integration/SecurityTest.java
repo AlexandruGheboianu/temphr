@@ -1,4 +1,4 @@
-package com.ghb.temphr;
+package com.ghb.temphr.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ghb.temphr.service.common.model.User;

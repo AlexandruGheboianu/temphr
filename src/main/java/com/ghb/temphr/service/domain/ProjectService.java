@@ -72,6 +72,8 @@ public class ProjectService {
   }
 
   public void removeProject(String id) {
-    projectRepository.delete(hashids.decode(id)[0]);
+    Project project = projectRepository.findOne(hashids.decode(id)[0]);
+    project.setDeleted(true);
+    projectRepository.save(project);
   }
 }

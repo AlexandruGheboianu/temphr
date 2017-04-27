@@ -1,4 +1,4 @@
-package com.ghb.temphr;
+package com.ghb.temphr.integration;
 
 /**
  * Created by Alexandru Gheboianu on 07.03.2017.
@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ghb.temphr.service.domain.model.Employee;
 import com.ghb.temphr.service.domain.repository.EmployeeRepository;
 import org.hashids.Hashids;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

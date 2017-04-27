@@ -1,4 +1,4 @@
-package com.ghb.temphr;
+package com.ghb.temphr.integration;
 
 import com.ghb.temphr.service.business.model.EmployeeSkill;
 import com.ghb.temphr.service.business.repository.EmployeeSkillRepository;

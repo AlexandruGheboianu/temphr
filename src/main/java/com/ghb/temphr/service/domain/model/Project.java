@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Where;
 
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -23,6 +24,7 @@ import javax.persistence.Table;
 @Where(clause = "deleted='false'")
 public class Project extends BaseEntity {
 
+  @Column(length = 50, nullable = false)
   private String name;
 
   private Date startDate;

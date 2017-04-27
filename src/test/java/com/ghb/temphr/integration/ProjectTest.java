@@ -1,4 +1,4 @@
-package com.ghb.temphr;
+package com.ghb.temphr.integration;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -86,6 +86,24 @@ public class ProjectTest extends AuthenticatedTest {
     this.mvc
         .perform(delete("/api/projects/" + hashids.encode(1)).header("X-Authorization", "Bearer " + token))
         .andExpect(status().isForbidden());
+  }
+
+  @Test
+  public void projectDeleteReflectedInRead() throws Exception {
+    long initialCount = projectRepository.count();
+    Project deleted = new Project();
+    deleted.setName("Test Project");
+    projectRepository.save(deleted);
+
+    this.mvc
+        .perform(delete("/api/projects/" + hashids.encode(deleted.getId())).header("X-Authorization", "Bearer " + token))
+        .andExpect(status().isAccepted());
+
+    this.mvc
+        .perform(get("/api/projects/" + hashids.encode(deleted.getId())).header("X-Authorization", "Bearer " + token))
+        .andExpect(status().isNotFound());
+    assertEquals(0,initialCount - projectRepository.count() );
+    assertNull(projectRepository.findOne(deleted.getId()));
   }
 
 }
