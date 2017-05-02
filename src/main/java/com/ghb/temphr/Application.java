@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * Created by agheboianu on 02.03.2017.
  */
 @SpringBootApplication
-@EnableJpaAuditing(dateTimeProviderRef = "", auditorAwareRef = "")
+@EnableJpaAuditing(dateTimeProviderRef = "dateTimeProvider", auditorAwareRef = "auditorAware")
 public class Application extends SpringBootServletInitializer {
 
   public static void main(String[] args) {
@@ -49,4 +49,6 @@ public class Application extends SpringBootServletInitializer {
   protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
     return application.sources(Application.class);
   }
+
+
 }

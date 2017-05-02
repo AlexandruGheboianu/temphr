@@ -1,8 +1,6 @@
 package com.ghb.temphr.security.auth.ajax;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import com.ghb.temphr.config.WebUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +14,7 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-
 import java.io.IOException;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -47,8 +43,8 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
   @Override
   public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
-    if (!HttpMethod.POST.name().equals(request.getMethod()) || !WebUtil.isAjax(request)) {
-      log.debug("Authentication method not supported. Request method: " + request.getMethod());
+    if (!HttpMethod.POST.name().equals(request.getMethod())) {
+      log.info("Authentication method not supported. Request method: " + request.getMethod());
       throw new AuthenticationServiceException("Authentication method not supported");
     }
 
