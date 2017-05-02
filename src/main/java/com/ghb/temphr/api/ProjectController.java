@@ -59,7 +59,7 @@ public class ProjectController {
   @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   public ResponseEntity deleteProject(@PathVariable String id) {
     projectService.removeProject(id);
-    return new ResponseEntity(HttpStatus.ACCEPTED);
+    return new ResponseEntity(HttpStatus.NO_CONTENT);
   }
 
 }

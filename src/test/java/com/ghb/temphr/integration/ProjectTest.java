@@ -121,11 +121,11 @@ public class ProjectTest extends AuthenticatedTest {
     deleted.setDeleted(false);
     projectRepository.save(deleted);
     this.mvc
-        .perform(get("/api/projects/" + 123).header("X-Authorization", "Bearer " + token))
-        .andExpect(status().isNotFound());
+        .perform(delete("/api/projects/" + 123).header("X-Authorization", "Bearer " + token))
+        .andExpect(status().isNoContent());
     this.mvc
         .perform(delete("/api/projects/" + hashids.encode(deleted.getId())).header("X-Authorization", "Bearer " + token))
-        .andExpect(status().isAccepted());
+        .andExpect(status().isNoContent());
 
     this.mvc
         .perform(get("/api/projects/" + hashids.encode(deleted.getId())).header("X-Authorization", "Bearer " + token))

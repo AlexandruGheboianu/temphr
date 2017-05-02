@@ -105,11 +105,11 @@ public class EmployeeTest extends AuthenticatedTest {
     employeeRepository.save(deleted);
 
     this.mvc
-        .perform(get("/api/employees/" +123).header("X-Authorization", "Bearer " + token))
-        .andExpect(status().isNotFound());
+        .perform(delete("/api/employees/" +123).header("X-Authorization", "Bearer " + token))
+        .andExpect(status().isNoContent());
     this.mvc
         .perform(delete("/api/employees/" + hashids.encode(deleted.getId())).header("X-Authorization", "Bearer " + token))
-        .andExpect(status().isAccepted());
+        .andExpect(status().isNoContent());
 
     this.mvc
         .perform(get("/api/employees/" + hashids.encode(deleted.getId())).header("X-Authorization", "Bearer " + token))

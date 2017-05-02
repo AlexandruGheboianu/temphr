@@ -78,7 +78,7 @@ public class EmployeeController {
   @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   public ResponseEntity deleteEmployee(@PathVariable String id) {
     employeeService.removeEmployee(id);
-    return new ResponseEntity(HttpStatus.ACCEPTED);
+    return new ResponseEntity(HttpStatus.NO_CONTENT);
   }
 
 }
