@@ -20,9 +20,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -93,5 +92,25 @@ public class EmployeeTest extends AuthenticatedTest {
     this.mvc
         .perform(post("/api/employees/").headers(headers).content("{\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"test@example.com\"}"))
         .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void employeeDeleteReflectedInRead() throws Exception {
+    long initialCount = employeeRepository.count();
+    Employee deleted = new Employee();
+    deleted.setFirstName("Gigi");
+    deleted.setEmail("gdod@example.com");
+    deleted.setLastName("Doodooo");
+    employeeRepository.save(deleted);
+
+    this.mvc
+        .perform(delete("/api/employees/" + hashids.encode(deleted.getId())).header("X-Authorization", "Bearer " + token))
+        .andExpect(status().isAccepted());
+
+    this.mvc
+        .perform(get("/api/employees/" + hashids.encode(deleted.getId())).header("X-Authorization", "Bearer " + token))
+        .andExpect(status().isNotFound());
+    assertEquals(0,initialCount - employeeRepository.count() );
+    assertNull(employeeRepository.findOne(deleted.getId()));
   }
 }

@@ -74,5 +74,11 @@ public class EmployeeController {
     return new ResponseEntity(HttpStatus.CREATED);
   }
 
+  @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+  public ResponseEntity deleteEmployee(@PathVariable String id) {
+    employeeService.removeEmployee(id);
+    return new ResponseEntity(HttpStatus.ACCEPTED);
+  }
 
 }
