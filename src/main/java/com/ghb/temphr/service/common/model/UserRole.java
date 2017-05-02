@@ -28,15 +28,6 @@ public class UserRole {
     @Enumerated(EnumType.STRING)
     @Column(name = "ROLE")
     protected Role role;
-
-    public Id() {
-      // needed for JPA entity manager to be able to create an instance
-    }
-
-    public Id(Long userId, Role role) {
-      this.userId = userId;
-      this.role = role;
-    }
   }
 
   @EmbeddedId

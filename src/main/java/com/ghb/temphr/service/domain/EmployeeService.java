@@ -36,7 +36,7 @@ public class EmployeeService {
 
   public Optional<EmployeeListModel> getEmployee(String id) {
     long[] decodedIds = hashids.decode(id);
-    if (decodedIds == null || decodedIds.length == 0) {
+    if (decodedIds.length == 0) {
       return Optional.empty();
     }
 
@@ -62,7 +62,7 @@ public class EmployeeService {
   public void removeEmployee(String id) {
     long[] decodedIds = hashids.decode(id);
 
-    if (decodedIds != null && decodedIds.length > 0) {
+    if (decodedIds.length > 0) {
       Employee employee = employeeRepository.findOne(hashids.decode(id)[0]);
       employee.setDeleted(true);
       employeeRepository.save(employee);

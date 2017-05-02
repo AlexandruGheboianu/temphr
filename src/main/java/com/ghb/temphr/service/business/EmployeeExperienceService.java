@@ -27,7 +27,7 @@ public class EmployeeExperienceService {
   public Optional<List<EmployeeSkillListModel>> getEmployeeSkills(String id) {
     long[] decodedIds = hashids.decode(id);
 
-    if (decodedIds == null || decodedIds.length == 0) {
+    if (decodedIds.length == 0) {
       return Optional.empty();
     }
 

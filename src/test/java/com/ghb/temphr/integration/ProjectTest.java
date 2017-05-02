@@ -16,6 +16,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.text.SimpleDateFormat;
+
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ProjectTest extends AuthenticatedTest {
   private static final Hashids hashids = new Hashids("e7rq4kjiof");
   private static final MediaType json = MediaType.APPLICATION_JSON_UTF8;
+  private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
   @Autowired
   private ProjectRepository projectRepository;
@@ -65,7 +68,7 @@ public class ProjectTest extends AuthenticatedTest {
               JsonNode actualObj = mapper.readTree(contentAsString);
               assertEquals(hashids.encode(1), actualObj.get("id").asText());
               assertEquals("Continental", actualObj.get("name").asText());
-              assertEquals("03/10/2017", actualObj.get("startDate").asText());
+              assertEquals(sdf.parse("03/10/2017").getTime() + "", actualObj.get("startDate").asText());
             });
     this.mvc
         .perform(get("/api/projects/" + 123).header("X-Authorization", "Bearer " + token))
@@ -81,6 +84,12 @@ public class ProjectTest extends AuthenticatedTest {
 
     Project proj = projectRepository.findOneByName("Plastor");
     assertNotNull(proj);
+    assertNotNull(proj.getVersion());
+    assertNotNull(proj.getCreatedBy());
+    assertNotNull(proj.getCreatedDate());
+    assertNotNull(proj.getUpdatedBy());
+    assertNotNull(proj.getLastUpdateDate());
+    assertFalse(proj.isDeleted());
   }
 
   @Test
@@ -109,8 +118,11 @@ public class ProjectTest extends AuthenticatedTest {
     long initialCount = projectRepository.count();
     Project deleted = new Project();
     deleted.setName("Test Project");
+    deleted.setDeleted(false);
     projectRepository.save(deleted);
-
+    this.mvc
+        .perform(get("/api/projects/" + 123).header("X-Authorization", "Bearer " + token))
+        .andExpect(status().isNotFound());
     this.mvc
         .perform(delete("/api/projects/" + hashids.encode(deleted.getId())).header("X-Authorization", "Bearer " + token))
         .andExpect(status().isAccepted());
@@ -118,7 +130,7 @@ public class ProjectTest extends AuthenticatedTest {
     this.mvc
         .perform(get("/api/projects/" + hashids.encode(deleted.getId())).header("X-Authorization", "Bearer " + token))
         .andExpect(status().isNotFound());
-    assertEquals(0,initialCount - projectRepository.count() );
+    assertEquals(0, initialCount - projectRepository.count());
     assertNull(projectRepository.findOne(deleted.getId()));
   }
 

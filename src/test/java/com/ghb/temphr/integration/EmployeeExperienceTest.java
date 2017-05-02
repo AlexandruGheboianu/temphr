@@ -52,6 +52,11 @@ public class EmployeeExperienceTest extends AuthenticatedTest {
         .perform(get("/api/employees/" + 134 + "/skills").header("X-Authorization", "Bearer " + token))
         .andExpect(status().isNotFound())
         .andExpect(content().contentType(json));
+
+    this.mvc
+        .perform(get("/api/employees/" + hashids.encode(134) + "/skills").header("X-Authorization", "Bearer " + token))
+        .andExpect(status().isNotFound())
+        .andExpect(content().contentType(json));
   }
 
   @Test

@@ -88,7 +88,7 @@ public class EmployeeTest extends AuthenticatedTest {
     assertNotNull(emp.getCreatedDate());
     assertNotNull(emp.getUpdatedBy());
     assertNotNull(emp.getLastUpdateDate());
-
+    assertFalse(emp.isDeleted());
     this.mvc
         .perform(post("/api/employees/").headers(headers).content("{\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"test@example.com\"}"))
         .andExpect(status().isBadRequest());
@@ -101,8 +101,12 @@ public class EmployeeTest extends AuthenticatedTest {
     deleted.setFirstName("Gigi");
     deleted.setEmail("gdod@example.com");
     deleted.setLastName("Doodooo");
+    deleted.setDeleted(false);
     employeeRepository.save(deleted);
 
+    this.mvc
+        .perform(get("/api/employees/" +123).header("X-Authorization", "Bearer " + token))
+        .andExpect(status().isNotFound());
     this.mvc
         .perform(delete("/api/employees/" + hashids.encode(deleted.getId())).header("X-Authorization", "Bearer " + token))
         .andExpect(status().isAccepted());
@@ -110,7 +114,7 @@ public class EmployeeTest extends AuthenticatedTest {
     this.mvc
         .perform(get("/api/employees/" + hashids.encode(deleted.getId())).header("X-Authorization", "Bearer " + token))
         .andExpect(status().isNotFound());
-    assertEquals(0,initialCount - employeeRepository.count() );
+    assertEquals(0, initialCount - employeeRepository.count());
     assertNull(employeeRepository.findOne(deleted.getId()));
   }
 }

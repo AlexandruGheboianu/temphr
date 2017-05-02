@@ -53,21 +53,5 @@ public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSucc
     response.setStatus(HttpStatus.OK.value());
     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
     mapper.writeValue(response.getWriter(), tokenMap);
-
-    clearAuthenticationAttributes(request);
-  }
-
-  /**
-   * Removes temporary authentication-related data which may have been stored
-   * in the session during the authentication process..
-   */
-  protected final void clearAuthenticationAttributes(HttpServletRequest request) {
-    HttpSession session = request.getSession(false);
-
-    if (session == null) {
-      return;
-    }
-
-    session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
   }
 }

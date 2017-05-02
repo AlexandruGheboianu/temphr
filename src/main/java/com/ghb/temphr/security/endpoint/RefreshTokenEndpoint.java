@@ -53,7 +53,7 @@ public class RefreshTokenEndpoint {
     String subject = refreshToken.getSubject();
     User user = userRepository.findByUsername(subject).orElseThrow(() -> new UsernameNotFoundException("User not found: " + subject));
 
-    if (user.getRoles() == null || user.getRoles().isEmpty()) {
+    if (user.getRoles().isEmpty()) {
       throw new InsufficientAuthenticationException("User has no roles assigned");
     }
     List<GrantedAuthority> authorities = user.getRoles().stream()

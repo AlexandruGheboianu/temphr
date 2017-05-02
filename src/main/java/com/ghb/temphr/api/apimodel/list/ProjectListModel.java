@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * Created by alexg on 3/8/2017.
@@ -12,12 +15,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ProjectListModel {
 
   private String id;
 
   private String name;
 
-  private String startDate;
+  @DateTimeFormat(pattern = "dd/MM/yyyy")
+  private Date startDate;
 }

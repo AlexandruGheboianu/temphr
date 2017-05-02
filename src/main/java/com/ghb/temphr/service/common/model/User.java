@@ -19,7 +19,6 @@ import javax.persistence.Table;
 @Table(name = "APP_USER")
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class User {
   @Id
   @Column(name = "ID")

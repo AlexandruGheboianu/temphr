@@ -1,6 +1,7 @@
 package com.ghb.temphr.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ghb.temphr.security.model.UserContext;
 import com.ghb.temphr.service.common.model.User;
 import com.ghb.temphr.service.common.repository.UserRepository;
 import org.junit.Test;
@@ -17,6 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import javax.transaction.Transactional;
+
+import java.util.Collections;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -49,17 +52,13 @@ public class SecurityTest {
   }
 
   private ResultActions attemptLogin(String user, String password) throws Exception {
-    MediaType json = MediaType.APPLICATION_JSON;
-    HttpHeaders headers = new HttpHeaders();
-    headers.add("Content-Type", "application/json");
-    headers.add("X-Requested-With", "XMLHttpRequest");
+    HttpHeaders headers = getHttpHeaders();
     return this.mvc
         .perform(post("/api/auth/login").headers(headers).content("{\"username\":\"" + user + "\",\"password\":\"" + password + "\"}"));
   }
 
   @Test
   public void notSupportedMethodTest() throws Exception {
-    MediaType json = MediaType.APPLICATION_JSON;
     HttpHeaders headers = new HttpHeaders();
     headers.add("Content-Type", "application/json");
     this.mvc
@@ -71,24 +70,33 @@ public class SecurityTest {
 
   @Test
   public void noPermissionsTest() throws Exception {
-    MediaType json = MediaType.APPLICATION_JSON;
-    HttpHeaders headers = new HttpHeaders();
-    headers.add("Content-Type", "application/json");
-    headers.add("X-Requested-With", "XMLHttpRequest");
+    HttpHeaders headers = getHttpHeaders();
     this.mvc
         .perform(post("/api/auth/login").headers(headers).content("{\"username\":\"gigi\",\"password\":\"test1234\"}"))
-    .andExpect(status().isUnauthorized());
+        .andExpect(status().isUnauthorized());
   }
 
   @Test
   public void noUsernameTest() throws Exception {
-    MediaType json = MediaType.APPLICATION_JSON;
-    HttpHeaders headers = new HttpHeaders();
-    headers.add("Content-Type", "application/json");
-    headers.add("X-Requested-With", "XMLHttpRequest");
+    HttpHeaders headers = getHttpHeaders();
     this.mvc
         .perform(post("/api/auth/login").headers(headers).content("{\"username\":\"\",\"password\":\"test1234\"}"))
         .andExpect(status().isUnauthorized());
+  }
+
+  @Test
+  public void noPasswordTest() throws Exception {
+    HttpHeaders headers = getHttpHeaders();
+    this.mvc
+        .perform(post("/api/auth/login").headers(headers).content("{\"username\":\"\",\"password\":\"\"}"))
+        .andExpect(status().isUnauthorized());
+  }
+
+  private HttpHeaders getHttpHeaders() {
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Content-Type", "application/json");
+    headers.add("X-Requested-With", "XMLHttpRequest");
+    return headers;
   }
 
   @Test
@@ -98,6 +106,7 @@ public class SecurityTest {
         .andExpect(status().isUnauthorized());
 
   }
+
   @Test
   public void malformedToken() throws Exception {
     this.mvc
@@ -177,5 +186,10 @@ public class SecurityTest {
     this.mvc
         .perform(get("/api/auth/token").header("X-Authorization", "Bearer " + token1[0]))
         .andExpect(status().isForbidden());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void userContextCreateTest() {
+    UserContext.create("", Collections.emptyList());
   }
 }
