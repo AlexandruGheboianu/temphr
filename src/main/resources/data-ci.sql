@@ -33,10 +33,10 @@ INSERT INTO PROJECTS (name, start_date, version, deleted) VALUES
 ('BRD',PARSEDATETIME('01-11-2016', 'dd-MM-yyyy'),1,'false'),
 ('Michelin-2017',PARSEDATETIME('01-06-2017', 'dd-MM-yyyy'),1,'false');
 
-INSERT INTO APP_USER (password, username) VALUES
-('$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G','alexghebo'),
-('$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G','gigi'),
-('$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G','gogu');
+INSERT INTO APP_USER (password, username,first_name,last_name,email,version, created_date) VALUES
+('$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G','alexghebo','Alexandru','Gheboinau','alexandru.gheboianu@gmail.com',1,PARSEDATETIME('03-10-2017', 'dd-MM-yyyy')),
+('$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G','gigi','Gheorghe','Spoitoru','gspot@example.com',1,PARSEDATETIME('03-10-2017', 'dd-MM-yyyy')),
+('$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G','gogu','Gogu','Gogolea','gogoasa@example.com',1,PARSEDATETIME('03-10-2017', 'dd-MM-yyyy'));
 
 INSERT INTO USER_ROLE (role, app_user_id) VALUES
 ('ADMIN',1),

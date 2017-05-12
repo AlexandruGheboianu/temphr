@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +58,7 @@ public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSucc
     tokenMap.put("refreshToken", refreshToken.getToken());
     tokenMap.put("firstName", user.getFirstName());
     tokenMap.put("lastName", user.getLastName());
+    tokenMap.put("registeredAt", new SimpleDateFormat("hh:mm dd/MM/yyyy").format(user.getCreatedDate()));
     tokenMap.put("roles", serializeRoles(userContext.getAuthorities()));
 
     response.setStatus(HttpStatus.OK.value());

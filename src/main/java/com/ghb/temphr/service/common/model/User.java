@@ -18,12 +18,7 @@ import javax.persistence.Table;
 @Table(name = "APP_USER")
 @Getter
 @NoArgsConstructor
-public class User {
-  @Id
-  @Column(name = "ID")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
+public class User extends BaseEntity {
   @Column(name = "username")
   private String username;
 
