@@ -31,7 +31,8 @@ INSERT INTO PROJECTS (name, start_date, version, deleted) VALUES
 ('Continental',PARSEDATETIME('03-10-2017', 'dd-MM-yyyy'),1,'false'),
 ('Auchan',PARSEDATETIME('02-02-2017', 'dd-MM-yyyy'),1,'false'),
 ('BRD',PARSEDATETIME('01-11-2016', 'dd-MM-yyyy'),1,'false'),
-('Michelin-2017',PARSEDATETIME('01-06-2017', 'dd-MM-yyyy'),1,'false');
+('Michelin-2017',PARSEDATETIME('01-06-2017', 'dd-MM-yyyy'),1,'false'),
+('Pj1',PARSEDATETIME('01-06-2017', 'dd-MM-yyyy'),1,'false');
 
 INSERT INTO APP_USER (password, username,first_name,last_name,email,version, created_date) VALUES
 ('$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G','alexghebo','Alexandru','Gheboinau','alexandru.gheboianu@gmail.com',1,PARSEDATETIME('03-10-2017', 'dd-MM-yyyy')),

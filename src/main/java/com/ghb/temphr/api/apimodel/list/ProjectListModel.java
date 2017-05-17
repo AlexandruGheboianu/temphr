@@ -1,9 +1,9 @@
 package com.ghb.temphr.api.apimodel.list;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -20,6 +20,6 @@ public class ProjectListModel {
 
   private String name;
 
-  @DateTimeFormat(pattern = "dd/MM/yyyy")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
   private Date startDate;
 }

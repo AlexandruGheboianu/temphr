@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeExperienceService {
 
-  private static final Hashids hashids = new Hashids("u8qb17mh8c");
+  private static final Hashids hashids = new Hashids("k7ds8kxomx");
   @Autowired
   private EmployeeSkillRepository employeeSkillRepository;
   @Autowired

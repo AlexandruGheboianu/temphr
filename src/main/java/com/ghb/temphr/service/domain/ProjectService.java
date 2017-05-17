@@ -2,6 +2,7 @@ package com.ghb.temphr.service.domain;
 
 import com.ghb.temphr.api.apimodel.create.ProjectAdd;
 import com.ghb.temphr.api.apimodel.list.ProjectListModel;
+import com.ghb.temphr.api.apimodel.update.ProjectUpdate;
 import com.ghb.temphr.service.domain.model.Project;
 import com.ghb.temphr.service.domain.repository.ProjectRepository;
 import org.hashids.Hashids;
@@ -30,6 +31,18 @@ public class ProjectService {
 
     projectRepository.save(project);
   }
+
+  // added by Alin
+  public void updateProject(ProjectUpdate projectUpdate, String id) {
+    Project project = projectRepository.findOne(hashids.decode(id)[0]);
+    if (projectUpdate.getName() != null) {
+      project.setName(projectUpdate.getName());
+    }
+    project.setStartDate(projectUpdate.getStartDate());
+
+    projectRepository.save(project);
+  }
+  // end
 
   public Page<ProjectListModel> getProjects(Pageable pageable) {
     return projectRepository.findAll(pageable).map(this::getProjectListModel);

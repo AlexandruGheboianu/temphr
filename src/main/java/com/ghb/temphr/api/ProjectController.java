@@ -2,6 +2,7 @@ package com.ghb.temphr.api;
 
 import com.ghb.temphr.api.apimodel.create.ProjectAdd;
 import com.ghb.temphr.api.apimodel.list.ProjectListModel;
+import com.ghb.temphr.api.apimodel.update.ProjectUpdate;
 import com.ghb.temphr.api.exception.ResourceNotFoundException;
 import com.ghb.temphr.service.domain.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,14 @@ public class ProjectController {
     projectService.addProject(projectAdd);
     return new ResponseEntity(HttpStatus.CREATED);
   }
-
+  // added by alin
+  @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+  @PreAuthorize("hasAnyRole('ROLE_PREMIUM_MEMBER','ROLE_ADMIN')")
+  public ResponseEntity updateProject(@RequestBody @Validated ProjectUpdate projectUpdate, @PathVariable String id) {
+    projectService.updateProject(projectUpdate,id);
+    return new ResponseEntity(HttpStatus.OK);
+  }
+  // end
 
   @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
   @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
