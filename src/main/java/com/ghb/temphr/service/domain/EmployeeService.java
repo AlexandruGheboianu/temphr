@@ -2,6 +2,7 @@ package com.ghb.temphr.service.domain;
 
 import com.ghb.temphr.api.apimodel.create.EmployeeAdd;
 import com.ghb.temphr.api.apimodel.list.EmployeeListModel;
+import com.ghb.temphr.api.apimodel.update.EmployeeUpdate;
 import com.ghb.temphr.service.domain.model.Employee;
 import com.ghb.temphr.service.domain.repository.EmployeeRepository;
 import org.hashids.Hashids;
@@ -29,6 +30,22 @@ public class EmployeeService {
     employee.setEmail(employeeAdd.getEmail());
     employeeRepository.save(employee);
   }
+
+  //added by alin
+  public void updateEmployee(EmployeeUpdate employeeUpdate, String id) {
+    Employee project = employeeRepository.findOne(hashids.decode(id)[0]);
+    if (employeeUpdate.getFirstName() != null) {
+      project.setFirstName(employeeUpdate.getFirstName());
+    }
+    if (employeeUpdate.getLastName() != null) {
+      project.setLastName(employeeUpdate.getLastName());
+    }
+    if (employeeUpdate.getEmail() != null) {
+      project.setEmail(employeeUpdate.getEmail());
+    }
+    employeeRepository.save(project);
+  }
+  //end
 
   public Page<EmployeeListModel> listEmployees(Pageable pageable) {
     return employeeRepository.findAll(pageable).map(this::getEmployeeListModel);

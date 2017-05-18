@@ -16,5 +16,5 @@ public class SkillListModel {
 
   private String name;
 
-  private String type;
+  private String skillType;
 }

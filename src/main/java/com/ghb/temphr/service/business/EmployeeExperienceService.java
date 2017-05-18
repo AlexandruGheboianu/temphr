@@ -44,7 +44,7 @@ public class EmployeeExperienceService {
     EmployeeSkillListModel employeeSkillListModel = new EmployeeSkillListModel();
     employeeSkillListModel.setId(hashids.encode(employeeSkill.getId()));
     employeeSkillListModel.setName(employeeSkill.getSkill().getName());
-    employeeSkillListModel.setType(employeeSkill.getSkill().getSkillType().name());
+    employeeSkillListModel.setSkillType(employeeSkill.getSkill().getSkillType().name());
     employeeSkillListModel.setLevel(employeeSkill.getLevel());
     return employeeSkillListModel;
   }

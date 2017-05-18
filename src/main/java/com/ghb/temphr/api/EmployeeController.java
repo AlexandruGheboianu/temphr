@@ -3,6 +3,7 @@ package com.ghb.temphr.api;
 import com.ghb.temphr.api.apimodel.create.EmployeeAdd;
 import com.ghb.temphr.api.apimodel.list.EmployeeListModel;
 import com.ghb.temphr.api.apimodel.list.EmployeeSkillListModel;
+import com.ghb.temphr.api.apimodel.update.EmployeeUpdate;
 import com.ghb.temphr.api.exception.ParentResourceNotFoundException;
 import com.ghb.temphr.api.exception.ResourceNotFoundException;
 import com.ghb.temphr.service.business.EmployeeExperienceService;
@@ -74,6 +75,15 @@ public class EmployeeController {
     employeeService.addEmployee(employeeAdd);
     return new ResponseEntity(HttpStatus.CREATED);
   }
+
+  //added by alin
+  @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+  @PreAuthorize("hasAnyRole('ROLE_PREMIUM_MEMBER','ROLE_ADMIN')")
+  public ResponseEntity updateEmployee(@RequestBody @Validated EmployeeUpdate employeeUpdate, @PathVariable String id) {
+    employeeService.updateEmployee(employeeUpdate, id);
+    return new ResponseEntity(HttpStatus.OK);
+  }
+  //end
 
   @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
   @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

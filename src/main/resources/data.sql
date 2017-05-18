@@ -11,12 +11,12 @@ INSERT INTO EMPLOYEES (first_name, last_name, email, version,deleted) VALUES
   ('Dan', 'Doe', 'dandoe@example.com', 1,'false');
 
 
-INSERT INTO SKILLS (name, skill_type) VALUES
-  ('Java', 'BACK_END'),
-  ('PHP', 'BACK_END'),
-  ('HTML', 'FRONT_END'),
-  ('JavaScript', 'FRONT_END'),
-  ('ReactJS', 'FRONT_END');
+INSERT INTO SKILLS (name, skill_type, deleted) VALUES
+  ('Java', 'BACK_END', 'false'),
+  ('PHP', 'BACK_END', 'false'),
+  ('HTML', 'FRONT_END', 'false'),
+  ('JavaScript', 'FRONT_END', 'false'),
+  ('ReactJS', 'FRONT_END', 'false');
 
 INSERT INTO EMPLOYEE_SKILLS (employee_id, skill_id, level, version) VALUES
   (1, 1, 8, 1),
