@@ -54,12 +54,16 @@ public class ProjectController {
     projectService.addProject(projectAdd);
     return new ResponseEntity(HttpStatus.CREATED);
   }
+
   // added by alin
   @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
   @PreAuthorize("hasAnyRole('ROLE_PREMIUM_MEMBER','ROLE_ADMIN')")
   public ResponseEntity updateProject(@RequestBody @Validated ProjectUpdate projectUpdate, @PathVariable String id) {
-    projectService.updateProject(projectUpdate,id);
-    return new ResponseEntity(HttpStatus.OK);
+    if (projectService.updateProject(projectUpdate, id)) {
+      return new ResponseEntity(HttpStatus.OK);
+    } else {
+      throw new ResourceNotFoundException("No project with id " + id + " was found.");
+    }
   }
   // end
 

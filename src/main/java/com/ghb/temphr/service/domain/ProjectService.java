@@ -33,14 +33,21 @@ public class ProjectService {
   }
 
   // added by Alin
-  public void updateProject(ProjectUpdate projectUpdate, String id) {
-    Project project = projectRepository.findOne(hashids.decode(id)[0]);
-    if (projectUpdate.getName() != null) {
-      project.setName(projectUpdate.getName());
-    }
-    project.setStartDate(projectUpdate.getStartDate());
+  public boolean updateProject(ProjectUpdate projectUpdate, String id) {
+    long[] decodedIds = hashids.decode(id);
+    if (decodedIds.length > 0) {
+      Project project = projectRepository.findOne(decodedIds[0]);
+      if (project != null) {
+        if (projectUpdate.getName() != null) {
+          project.setName(projectUpdate.getName());
+        }
+        project.setStartDate(projectUpdate.getStartDate());
 
-    projectRepository.save(project);
+        projectRepository.save(project);
+        return true;
+      }
+    }
+    return false;
   }
   // end
 
